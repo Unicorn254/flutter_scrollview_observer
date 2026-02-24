@@ -63,7 +63,7 @@ extension NestedScrollViewTabBarViewDemoLogicForObserver
         return;
       }
 
-      // Tab2 sliver list
+      // Tab2 sliver grid
       if (key == state.tab2SliverGridCtx) {
         final model = value as GridViewObserveModel;
         debugPrint("sliverTab2GridCtx: ${model.displayingChildIndexList}");
@@ -77,7 +77,7 @@ extension NestedScrollViewTabBarViewDemoLogicForObserver
         return;
       }
 
-      // Tab2 sliver grid
+      // Tab3 sliver list
       if (key == state.tab3SliverListCtx) {
         final model = value as ListViewObserveModel;
         debugPrint("sliverTab3ListCtx: ${model.displayingChildIndexList}");
@@ -88,6 +88,8 @@ extension NestedScrollViewTabBarViewDemoLogicForObserver
         ]);
         return;
       }
+
+      // Tab3 sliver grid
       if (key == state.tab3SliverGridCtx) {
         final model = value as GridViewObserveModel;
         debugPrint("sliverTab3GridCtx: ${model.displayingChildIndexList}");
