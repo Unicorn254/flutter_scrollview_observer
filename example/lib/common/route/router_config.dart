@@ -27,6 +27,8 @@ import 'package:scrollview_observer_example/features/listview/listview_demo/list
 import 'package:scrollview_observer_example/features/listview/listview_dynamic_offset/listview_dynamic_offset_page.dart';
 import 'package:scrollview_observer_example/features/listview/listview_fixed_height_demo/listview_fixed_height_demo_page.dart';
 import 'package:scrollview_observer_example/features/listview/sliver_list_demo/sliver_list_demo_page.dart';
+import 'package:scrollview_observer_example/features/nested_scrollview/nested_scrollview_demo/nested_scrollview_demo_page.dart';
+import 'package:scrollview_observer_example/features/nested_scrollview/nested_scrollview_tab_bar_view_demo/page/nested_scrollview_tab_bar_view_demo_page.dart';
 import 'package:scrollview_observer_example/features/pageview/pageview_demo/pageview_demo_page.dart';
 import 'package:scrollview_observer_example/features/pageview/pageview_demo/pageview_parallax_item_listener_page.dart';
 import 'package:scrollview_observer_example/features/pageview/pageview_demo/pageview_parallax_page.dart';
@@ -70,6 +72,7 @@ class MyPage {
   static const sliverAppBar = '/sliver_app_bar';
   // NestedScrollView
   static const nestedScrollView = '/nested_scroll_view';
+  static const nestedScrollViewTabBarView = '/nested_scroll_view_tab_bar_view';
   // PageView
   static const pageView = '/page_view';
   static const pageViewParallax = '/page_view_parallax';
@@ -184,7 +187,11 @@ class MyRoute {
     ),
     GoRoute(
       path: MyPage.nestedScrollView,
-      builder: (context, state) => const SliverAppBarDemoPage(),
+      builder: (context, state) => const NestedScrollViewDemoPage(),
+    ),
+    GoRoute(
+      path: MyPage.nestedScrollViewTabBarView,
+      builder: (context, state) => const NestedScrollViewTabBarViewDemoPage(),
     ),
     GoRoute(
       path: MyPage.pageView,

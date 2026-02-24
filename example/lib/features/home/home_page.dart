@@ -136,6 +136,12 @@ class HomePage extends StatelessWidget {
           },
         ),
         ListTile(
+          title: const Text("NestedScrollView - TabBarView"),
+          onTap: () {
+            NavigationService.push(MyPage.nestedScrollViewTabBarView);
+          },
+        ),
+        ListTile(
           title: const Text("PageView"),
           onTap: () {
             NavigationService.push(MyPage.pageView);
