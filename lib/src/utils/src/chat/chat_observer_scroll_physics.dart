@@ -8,10 +8,13 @@ import 'package:flutter/material.dart';
 import 'chat_observer_scroll_physics_mixin.dart';
 import 'chat_scroll_observer.dart';
 
+/// Deprecated scroll physics for chat observer clamping scroll physics.
+/// Use [ChatObserverClampingScrollPhysics] instead.
 @Deprecated(
     'It will be removed in version 2, please use [ChatObserverClampingScrollPhysics] instead')
 class ChatObserverClampinScrollPhysics
     extends ChatObserverClampingScrollPhysics {
+  /// Creates a [ChatObserverClampinScrollPhysics].
   ChatObserverClampinScrollPhysics({
     required ChatScrollObserver observer,
   }) : super(observer: observer);
@@ -35,8 +38,10 @@ class ChatObserverClampingScrollPhysics extends ClampingScrollPhysics
   }
 }
 
+/// Bouncing scroll physics designed for chat scroll observer.
 class ChatObserverBouncingScrollPhysics extends BouncingScrollPhysics
     with ChatObserverScrollPhysicsMixin {
+  /// Creates a [ChatObserverBouncingScrollPhysics].
   ChatObserverBouncingScrollPhysics({
     ScrollPhysics? parent,
     required ChatScrollObserver observer,

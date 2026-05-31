@@ -102,7 +102,9 @@ mixin ChatObserverScrollPhysicsMixin on ScrollPhysics {
   bool shouldAcceptUserOffset(ScrollMetrics position) => true;
 
   /// Calling observer's [onHandlePositionCallback].
-  void _handlePositionCallback(ChatScrollObserverHandlePositionResultModel result) {
+  void _handlePositionCallback(
+    ChatScrollObserverHandlePositionResultModel result,
+  ) {
     ambiguate(WidgetsBinding.instance)?.addPostFrameCallback((timeStamp) {
       observer.onHandlePositionResultCallback?.call(result);
       // ignore: deprecated_member_use_from_same_package

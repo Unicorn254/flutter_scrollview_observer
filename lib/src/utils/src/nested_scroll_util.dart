@@ -100,7 +100,7 @@ class NestedScrollUtil {
   }
 
   /// Reset all data.
-  reset() {
+  void reset() {
     headerSliverContexts.clear();
     bodySliverContexts.clear();
     remainingSliverContext = null;
@@ -216,7 +216,7 @@ class NestedScrollUtil {
 
   /// Switch the [ScrollController] of [observerController] according to the
   /// [NestedScrollUtilPosition].
-  switchScrollController({
+  void switchScrollController({
     required SliverObserverController observerController,
     required NestedScrollUtilPosition position,
   }) {
