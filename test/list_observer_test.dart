@@ -1105,7 +1105,8 @@ void main() {
             child: ListView.builder(
               controller: scrollController,
               itemCount: 10,
-              itemBuilder: (ctx, index) => SizedBox(height: 50, child: Text('$index')),
+              itemBuilder: (ctx, index) =>
+                  SizedBox(height: 50, child: Text('$index')),
             ),
           ),
         ),
@@ -1140,7 +1141,8 @@ void main() {
             child: ListView.builder(
               controller: scrollController,
               itemCount: 10,
-              itemBuilder: (ctx, index) => SizedBox(height: 50, child: Text('$index')),
+              itemBuilder: (ctx, index) =>
+                  SizedBox(height: 50, child: Text('$index')),
             ),
           ),
         ),
@@ -1156,4 +1158,3 @@ void main() {
     });
   });
 }
-

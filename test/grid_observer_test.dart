@@ -878,7 +878,8 @@ void main() {
                 crossAxisCount: 2,
               ),
               itemCount: 10,
-              itemBuilder: (ctx, index) => SizedBox(height: 50, child: Text('$index')),
+              itemBuilder: (ctx, index) =>
+                  SizedBox(height: 50, child: Text('$index')),
             ),
           ),
         ),
@@ -916,7 +917,8 @@ void main() {
                 crossAxisCount: 2,
               ),
               itemCount: 10,
-              itemBuilder: (ctx, index) => SizedBox(height: 50, child: Text('$index')),
+              itemBuilder: (ctx, index) =>
+                  SizedBox(height: 50, child: Text('$index')),
             ),
           ),
         ),
@@ -932,4 +934,3 @@ void main() {
     });
   });
 }
-
