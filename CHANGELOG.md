@@ -1,3 +1,11 @@
+## 1.27.0
+- ChatScrollObserver
+  - Record `sliverContext` and support conditional shrink wrap observation in standby by @LinXunFeng.
+- ObserverWidget
+  - Add `cancelOnceObserveNotificationBubbling` to control notification bubbling by @LinXunFeng.
+- Others
+  - Add return types and type annotations to satisfy lint rules by @LinXunFeng.
+
 ## 1.26.3
 - ObserverWidget
   - Fix incorrect tag comparison in `_checkTagChange` by @LinXunFeng in [#143](https://github.com/fluttercandies/flutter_scrollview_observer/issues/143).
