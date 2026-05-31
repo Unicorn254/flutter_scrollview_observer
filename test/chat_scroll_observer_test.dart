@@ -474,6 +474,103 @@ void main() {
 
     scrollController.dispose();
   });
+
+  testWidgets('isNeedObserveSwitchShrinkWrap parameter', (tester) async {
+    final scrollController = ScrollController();
+    final observerController = ListObserverController(
+      controller: scrollController,
+    );
+    int observeSwitchShrinkWrapCount = 0;
+    final chatScrollObserver = TestChatScrollObserver(
+      observerController,
+      onObserveSwitchShrinkWrap: () {
+        observeSwitchShrinkWrapCount++;
+      },
+    );
+
+    Widget widget = ChatListView(
+      scrollController: scrollController,
+      observerController: observerController,
+      chatScrollObserver: chatScrollObserver,
+    );
+    await tester.pumpWidget(widget);
+    await tester.pumpAndSettle();
+
+    // Reset count after constructor frame callback
+    observeSwitchShrinkWrapCount = 0;
+
+    // Test with isNeedObserveSwitchShrinkWrap = false
+    await chatScrollObserver.standby(
+      isNeedObserveSwitchShrinkWrap: false,
+    );
+    expect(observeSwitchShrinkWrapCount, 0);
+
+    // Test with isNeedObserveSwitchShrinkWrap = true (default)
+    await chatScrollObserver.standby();
+    expect(observeSwitchShrinkWrapCount, 1);
+
+    scrollController.dispose();
+  });
+
+  testWidgets('record and pass innerSliverContext', (tester) async {
+    final scrollController = ScrollController();
+    final mockObserverController = MockListObserverController(
+      controller: scrollController,
+    );
+    final chatScrollObserver = ChatScrollObserver(mockObserverController);
+
+    Widget widget = ChatListView(
+      scrollController: scrollController,
+      observerController: mockObserverController,
+      chatScrollObserver: chatScrollObserver,
+    );
+    await tester.pumpWidget(widget);
+    await tester.pumpAndSettle();
+
+    final testContext = tester.element(find.byType(ListView));
+    await chatScrollObserver.standby(
+      sliverContext: testContext,
+    );
+
+    // Verify it is recorded
+    expect(chatScrollObserver.innerSliverContext, testContext);
+
+    // Verify observeRefItem forwards innerSliverContext to observeItem
+    chatScrollObserver.observeRefItem();
+    expect(mockObserverController.lastObserveItemSliverContext, testContext);
+
+    scrollController.dispose();
+  });
+}
+
+class MockListObserverController extends ListObserverController {
+  MockListObserverController({super.controller});
+
+  BuildContext? lastObserveItemSliverContext;
+
+  @override
+  ListViewObserveDisplayingChildModel? observeItem({
+    BuildContext? sliverContext,
+    required int index,
+  }) {
+    lastObserveItemSliverContext = sliverContext;
+    return super.observeItem(sliverContext: sliverContext, index: index);
+  }
+}
+
+class TestChatScrollObserver extends ChatScrollObserver {
+  TestChatScrollObserver(
+    ListObserverController observerController, {
+    required this.onObserveSwitchShrinkWrap,
+  }) : super(observerController);
+
+  final VoidCallback onObserveSwitchShrinkWrap;
+
+  @override
+  observeSwitchShrinkWrap() {
+    onObserveSwitchShrinkWrap();
+    return super.observeSwitchShrinkWrap();
+  }
 }
 
 class ChatListView extends StatefulWidget {

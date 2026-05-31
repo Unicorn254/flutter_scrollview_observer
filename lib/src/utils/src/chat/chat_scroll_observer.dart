@@ -83,9 +83,13 @@ class ChatScrollObserver {
   /// If the return value is null, the default processing will be performed.
   ChatScrollObserverCustomAdjustPosition? customAdjustPosition;
 
+  /// The sliver context.
+  BuildContext? innerSliverContext;
+
   /// Observation result of reference item after ScrollView children update.
   ListViewObserveDisplayingChildModel? observeRefItem() {
     return observerController.observeItem(
+      sliverContext: innerSliverContext,
       index: refItemIndexAfterUpdate,
     );
   }
@@ -104,7 +108,7 @@ class ChatScrollObserver {
   /// message before insertion to [refItemIndex], and assign the index of the
   /// reference message after insertion to [refItemIndexAfterUpdate].
   /// Note that they should refer to the index of the same message.
-  standby({
+  Future<void> standby({
     BuildContext? sliverContext,
     bool isRemove = false,
     int changeCount = 1,
@@ -121,11 +125,15 @@ class ChatScrollObserver {
     int refItemIndexAfterUpdate = 0,
     ChatScrollObserverCustomAdjustPosition? customAdjustPosition,
     ChatScrollObserverCustomAdjustPositionDelta? customAdjustPositionDelta,
+    bool isNeedObserveSwitchShrinkWrap = true,
   }) async {
+    innerSliverContext = sliverContext;
     innerMode = mode;
     this.isRemove = isRemove;
     this.changeCount = changeCount;
-    observeSwitchShrinkWrap();
+    if (isNeedObserveSwitchShrinkWrap) {
+      observeSwitchShrinkWrap();
+    }
 
     int _innerRefItemIndex;
     int _innerRefItemIndexAfterUpdate;
@@ -241,7 +249,7 @@ class ChatScrollObserver {
     viewport.markNeedsLayout();
   }
 
-  observeSwitchShrinkWrap() {
+  void observeSwitchShrinkWrap() {
     ambiguate(WidgetsBinding.instance)?.addPostFrameCallback((_) {
       final ctx = observerController.fetchSliverContext();
       if (ctx == null) return;
