@@ -91,6 +91,11 @@ class ObserverWidget<C extends ObserverController, M extends ObserveModel,
   /// fit your needs.
   final M? Function(BuildContext)? customHandleObserve;
 
+  /// Whether to cancel the [ScrollViewOnceObserveNotification] notification bubbling.
+  ///
+  /// Defaults to `true`.
+  final bool cancelOnceObserveNotificationBubbling;
+
   const ObserverWidget({
     Key? key,
     required this.child,
@@ -108,6 +113,7 @@ class ObserverWidget<C extends ObserverController, M extends ObserveModel,
         ObserverTriggerOnObserveType.displayingItemsChange,
     this.customHandleObserve,
     this.customTargetRenderSliverType,
+    this.cancelOnceObserveNotificationBubbling = true,
   })  : assert(toNextOverPercent > 0 && toNextOverPercent <= 1),
         super(key: key);
 
@@ -312,7 +318,7 @@ class ObserverWidgetState<
             resultModel: result,
           );
         }
-        return true;
+        return widget.cancelOnceObserveNotificationBubbling;
       },
       child: NotificationListener<ScrollNotification>(
         onNotification: (notification) {
@@ -372,7 +378,7 @@ class ObserverWidgetState<
   }
 
   /// Setup sliver controller
-  _setupSliverController({bool isInitState = false}) {
+  void _setupSliverController({bool isInitState = false}) {
     final sliverController = widget.sliverController;
     if (sliverController == null) return;
     sliverController.innerReset();
@@ -445,7 +451,7 @@ class ObserverWidgetState<
 
   /// Update [innerCanHandleObserve] according to the
   /// [ObserverController.observeIntervalForScrolling].
-  updateInnerCanHandleObserve() async {
+  Future<void> updateInnerCanHandleObserve() async {
     final observeInterval =
         widget.sliverController?.observeIntervalForScrolling ?? Duration.zero;
     if (Duration.zero == observeInterval) {

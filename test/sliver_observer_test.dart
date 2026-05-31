@@ -1870,4 +1870,94 @@ void main() {
       await tester.pumpAndSettle();
     });
   });
+
+  group('cancelOnceObserveNotificationBubbling', () {
+    testWidgets('cancelOnceObserveNotificationBubbling is true (default)',
+        (tester) async {
+      final scrollController = ScrollController();
+      final observerController = SliverObserverController(
+        controller: scrollController,
+      );
+      int notificationCount = 0;
+      Widget widget = NotificationListener<ScrollViewOnceObserveNotification>(
+        onNotification: (notification) {
+          notificationCount++;
+          return false;
+        },
+        child: SliverViewObserver(
+          controller: observerController,
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: CustomScrollView(
+              controller: scrollController,
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (ctx, index) => SizedBox(height: 50, child: Text('$index')),
+                    childCount: 10,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      await tester.pumpWidget(MaterialApp(home: Material(child: widget)));
+
+      // Need to find sliverContext to trigger dispatchOnceObserve
+      final element = tester.element(find.byType(SliverList));
+
+      // Trigger observation which dispatches ScrollViewOnceObserveNotification
+      await observerController.dispatchOnceObserve(sliverContext: element);
+
+      // By default it should block (cancel) bubbling, so notificationCount should be 0
+      expect(notificationCount, 0);
+      scrollController.dispose();
+    });
+
+    testWidgets('cancelOnceObserveNotificationBubbling is false',
+        (tester) async {
+      final scrollController = ScrollController();
+      final observerController = SliverObserverController(
+        controller: scrollController,
+      );
+      int notificationCount = 0;
+      Widget widget = NotificationListener<ScrollViewOnceObserveNotification>(
+        onNotification: (notification) {
+          notificationCount++;
+          return false;
+        },
+        child: SliverViewObserver(
+          controller: observerController,
+          cancelOnceObserveNotificationBubbling: false,
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: CustomScrollView(
+              controller: scrollController,
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (ctx, index) => SizedBox(height: 50, child: Text('$index')),
+                    childCount: 10,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      await tester.pumpWidget(MaterialApp(home: Material(child: widget)));
+
+      // Need to find sliverContext to trigger dispatchOnceObserve
+      final element = tester.element(find.byType(SliverList));
+
+      // Trigger observation which dispatches ScrollViewOnceObserveNotification
+      await observerController.dispatchOnceObserve(sliverContext: element);
+
+      // It should NOT cancel bubbling, so notificationCount should be 1
+      expect(notificationCount, 1);
+      scrollController.dispose();
+    });
+  });
 }
+

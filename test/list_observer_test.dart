@@ -1084,4 +1084,76 @@ void main() {
       await tester.pumpAndSettle();
     });
   });
+
+  group('cancelOnceObserveNotificationBubbling', () {
+    testWidgets('cancelOnceObserveNotificationBubbling is true (default)',
+        (tester) async {
+      final scrollController = ScrollController();
+      final observerController = ListObserverController(
+        controller: scrollController,
+      );
+      int notificationCount = 0;
+      Widget widget = NotificationListener<ListViewOnceObserveNotification>(
+        onNotification: (notification) {
+          notificationCount++;
+          return false;
+        },
+        child: ListViewObserver(
+          controller: observerController,
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: ListView.builder(
+              controller: scrollController,
+              itemCount: 10,
+              itemBuilder: (ctx, index) => SizedBox(height: 50, child: Text('$index')),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpWidget(widget);
+
+      // Trigger observation which dispatches ListViewOnceObserveNotification
+      await observerController.dispatchOnceObserve();
+
+      // By default it should block (cancel) bubbling, so notificationCount should be 0
+      expect(notificationCount, 0);
+      scrollController.dispose();
+    });
+
+    testWidgets('cancelOnceObserveNotificationBubbling is false',
+        (tester) async {
+      final scrollController = ScrollController();
+      final observerController = ListObserverController(
+        controller: scrollController,
+      );
+      int notificationCount = 0;
+      Widget widget = NotificationListener<ListViewOnceObserveNotification>(
+        onNotification: (notification) {
+          notificationCount++;
+          return false;
+        },
+        child: ListViewObserver(
+          controller: observerController,
+          cancelOnceObserveNotificationBubbling: false,
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: ListView.builder(
+              controller: scrollController,
+              itemCount: 10,
+              itemBuilder: (ctx, index) => SizedBox(height: 50, child: Text('$index')),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpWidget(widget);
+
+      // Trigger observation which dispatches ListViewOnceObserveNotification
+      await observerController.dispatchOnceObserve();
+
+      // It should NOT cancel bubbling, so notificationCount should be 1
+      expect(notificationCount, 1);
+      scrollController.dispose();
+    });
+  });
 }
+

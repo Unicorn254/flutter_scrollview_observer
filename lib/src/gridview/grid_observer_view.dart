@@ -38,6 +38,7 @@ class GridViewObserver extends ObserverWidget<GridObserverController,
         ObserverTriggerOnObserveType.displayingItemsChange,
     GridViewObserveModel? Function(BuildContext context)? customHandleObserve,
     bool Function(RenderObject?)? customTargetRenderSliverType,
+    bool cancelOnceObserveNotificationBubbling = true,
   }) : super(
           key: key,
           child: child,
@@ -54,6 +55,8 @@ class GridViewObserver extends ObserverWidget<GridObserverController,
           triggerOnObserveType: triggerOnObserveType,
           customHandleObserve: customHandleObserve,
           customTargetRenderSliverType: customTargetRenderSliverType,
+          cancelOnceObserveNotificationBubbling:
+              cancelOnceObserveNotificationBubbling,
         );
 
   @override

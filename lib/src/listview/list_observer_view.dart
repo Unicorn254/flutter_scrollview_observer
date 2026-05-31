@@ -38,6 +38,7 @@ class ListViewObserver extends ObserverWidget<ListObserverController,
         ObserverTriggerOnObserveType.displayingItemsChange,
     ListViewObserveModel? Function(BuildContext context)? customHandleObserve,
     bool Function(RenderObject?)? customTargetRenderSliverType,
+    bool cancelOnceObserveNotificationBubbling = true,
   }) : super(
           key: key,
           child: child,
@@ -54,6 +55,8 @@ class ListViewObserver extends ObserverWidget<ListObserverController,
           triggerOnObserveType: triggerOnObserveType,
           customHandleObserve: customHandleObserve,
           customTargetRenderSliverType: customTargetRenderSliverType,
+          cancelOnceObserveNotificationBubbling:
+              cancelOnceObserveNotificationBubbling,
         );
 
   @override

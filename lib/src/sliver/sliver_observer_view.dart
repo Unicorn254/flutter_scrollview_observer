@@ -62,6 +62,7 @@ class SliverViewObserver extends ObserverWidget<SliverObserverController,
         ObserverTriggerOnObserveType.displayingItemsChange,
     ObserveModel? Function(BuildContext context)? customHandleObserve,
     this.extendedHandleObserve,
+    bool cancelOnceObserveNotificationBubbling = true,
   }) : super(
           key: key,
           child: child,
@@ -77,6 +78,8 @@ class SliverViewObserver extends ObserverWidget<SliverObserverController,
           autoTriggerObserveTypes: autoTriggerObserveTypes,
           triggerOnObserveType: triggerOnObserveType,
           customHandleObserve: customHandleObserve,
+          cancelOnceObserveNotificationBubbling:
+              cancelOnceObserveNotificationBubbling,
         );
 
   @override
