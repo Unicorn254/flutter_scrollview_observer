@@ -153,6 +153,7 @@ class _SliverAppBarDemoPageState extends State<SliverAppBarDemoPage> {
         _buildSliverListView(),
         _buildSliverGridView(),
       ],
+      // ignore: deprecated_member_use
       cacheExtent: double.maxFinite,
     );
   }

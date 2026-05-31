@@ -123,6 +123,7 @@ class _ListViewDemoPageState extends State<ListViewDemoPage> {
         return _buildSeparatorView();
       },
       itemCount: 100,
+      // ignore: deprecated_member_use
       cacheExtent: double.maxFinite,
     );
   }

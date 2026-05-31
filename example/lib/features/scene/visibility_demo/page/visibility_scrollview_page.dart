@@ -91,6 +91,7 @@ class _VisibilityScrollViewPageState extends State<VisibilityScrollViewPage>
         _buildMiddleSliver(),
         _buildSliverGridView(),
       ],
+      // ignore: deprecated_member_use
       cacheExtent: double.maxFinite,
     );
   }

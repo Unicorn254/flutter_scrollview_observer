@@ -468,6 +468,7 @@ mixin ObserverControllerForScroll on ObserverControllerForInfo {
         final viewportSize =
             isHorizontal ? viewport.size.width : viewport.size.height;
         final viewportBoundaryExtent =
+            // ignore: deprecated_member_use
             viewportSize * 0.5 + (viewport.cacheExtent ?? 0);
         if (precedingScrollExtent > (viewportOffset + viewportBoundaryExtent)) {
           double targetOffset = precedingScrollExtent - viewportBoundaryExtent;

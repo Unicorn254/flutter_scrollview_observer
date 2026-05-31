@@ -103,6 +103,7 @@ class _DetailListViewState extends State<DetailListView>
       // https://github.com/fluttercandies/flutter_scrollview_observer/wiki/3%E3%80%81Chat-Observer
       //
       // Since the content of the current page is small, maxFinite is set up.
+      // ignore: deprecated_member_use
       cacheExtent: double.maxFinite,
     );
 

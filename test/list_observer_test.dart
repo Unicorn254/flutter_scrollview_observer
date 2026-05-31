@@ -41,6 +41,7 @@ void main() {
               return const SizedBox(height: 10);
             },
         itemCount: itemCount,
+        // ignore: deprecated_member_use
         cacheExtent: cacheExtent,
       ),
     );
@@ -72,6 +73,7 @@ void main() {
               }
             : null,
         itemCount: itemCount,
+        // ignore: deprecated_member_use
         cacheExtent: cacheExtent,
       ),
     );

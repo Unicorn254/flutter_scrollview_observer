@@ -149,6 +149,7 @@ class _InfiniteListViewPageState extends State<InfiniteListViewPage> {
       },
       itemCount: dataSource.length,
       // Ensure that the reference item can be found when keeping position.
+      // ignore: deprecated_member_use
       cacheExtent: itemMaxHeight * (generateCount + 2),
     );
   }

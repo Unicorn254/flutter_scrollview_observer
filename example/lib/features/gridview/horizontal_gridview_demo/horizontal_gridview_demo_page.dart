@@ -134,6 +134,7 @@ class _HorizontalGridViewDemoPageState
         );
       },
       itemCount: 100,
+      // ignore: deprecated_member_use
       cacheExtent: double.maxFinite,
     );
   }
