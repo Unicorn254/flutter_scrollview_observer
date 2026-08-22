@@ -1,3 +1,7 @@
+## 1.27.1
+- ObserverController
+  - Correct the scrolling clamped by an outdated `scrollExtent` by @LinXunFeng in [#150](https://github.com/fluttercandies/flutter_scrollview_observer/issues/150).
+
 ## 1.27.0
 - ChatScrollObserver
   - Record `sliverContext` and support conditional shrink wrap observation in standby by @LinXunFeng.
